@@ -88,13 +88,15 @@ class ExportUtils {
                 break;
         }
         
-        const finalMovement = Math.max(0, baseMovement - armorPenalty);
-        
+        const finalMovement = Math.max(6, baseMovement - armorPenalty);
+        const squares = Math.round(finalMovement / 1.5);
+
         return {
             base: baseMovement,
             armorPenalty: armorPenalty,
             final: finalMovement,
-            formula: `(${agility} × 1.5) + 1.5 - ${armorPenalty} = ${finalMovement}m`,
+            squares: squares,
+            formula: `(${agility} × 1.5) + 1.5 - ${armorPenalty} = ${finalMovement}m (${squares} cases)`,
             details: {
                 agility: agility,
                 baseFormula: `(${agility} × 1.5) + 1.5`,

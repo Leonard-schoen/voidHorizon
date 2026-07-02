@@ -4647,10 +4647,10 @@ function registerHeroSheet() {
                 "6d4": 5,   // Très rapide
                 "7d4": 6    // Très très rapide
             };
-            
+
             const degree = agiliteDegreeMap[agiliteValue] || 1;
             let movement = (degree * 1.5) + 1.5;
-            
+
             // Appliquer le malus d'armure si l'acteur est fourni
             if (actor && actor.system && actor.system.armor) {
                 const armorType = actor.system.armor.type || "tissu";
@@ -4663,8 +4663,42 @@ function registerHeroSheet() {
                 const armorPenalty = armorPenaltyMap[armorType] || 0;
                 movement -= armorPenalty;
             }
-            
-            return Math.max(0, movement).toFixed(1); // Éviter les valeurs négatives
+
+            return Math.max(6, movement).toFixed(1); // Mouvement minimum de 6m (4 cases)
+        });
+
+        // Helper pour calculer le nombre de cases de mouvement (1 case = 1.5m)
+        Handlebars.registerHelper('getMovementSquares', function(agiliteValue, actor) {
+            // Mapper les valeurs de dés aux degrés d'agilité
+            const agiliteDegreeMap = {
+                "2d4": 1,   // Challengé
+                "3d4": 2,   // Lourdeau
+                "4d4": 3,   // Bien
+                "5d4": 4,   // Rapide
+                "6d4": 5,   // Très rapide
+                "7d4": 6    // Très très rapide
+            };
+
+            const degree = agiliteDegreeMap[agiliteValue] || 1;
+            let movement = (degree * 1.5) + 1.5;
+
+            // Appliquer le malus d'armure si l'acteur est fourni
+            if (actor && actor.system && actor.system.armor) {
+                const armorType = actor.system.armor.type || "tissu";
+                const armorPenaltyMap = {
+                    "tissu": 0,      // Malus = 0m
+                    "legere": 1.5,   // Malus = 1.5m
+                    "lourde": 3,     // Malus = 3m
+                    "blindee": 4.5   // Malus = 4.5m
+                };
+                const armorPenalty = armorPenaltyMap[armorType] || 0;
+                movement -= armorPenalty;
+            }
+
+            // Appliquer le minimum de 6m puis convertir en cases
+            movement = Math.max(6, movement);
+            const squares = Math.round(movement / 1.5);
+            return squares;
         });
 
     // Enregistrer la feuille d'acteur
