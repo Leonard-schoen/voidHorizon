@@ -2544,13 +2544,14 @@ textarea:focus {
 }
 
 .movement-distance {
-    font-size: 1em;
-    margin-bottom: 5px;
+    font-size: 1.4em;
+    color: #3498db;
 }
 
 .movement-squares {
     font-size: 0.85em;
     margin-bottom: 5px;
+    color: #799ab1;
 }
 
 .movement-formula {
