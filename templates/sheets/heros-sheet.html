@@ -202,7 +202,13 @@
                                             <i class="fas fa-running"></i> Mouvement disponible
                                         </div>
                                                         <div class="movement-value">
-                    {{getMovementAvailable system.agilite.value actor}}m ({{getMovementSquares system.agilite.value actor}} cases)
+                                                            <div class="movement-distance">
+{{getMovementAvailable system.agilite.value actor}}m 
+                                                            </div>
+                                                            <div class="movement-squares">
+{{getMovementSquares system.agilite.value actor}} cases
+                                                            </div>
+                    
                 </div>
                                     </div>
 
